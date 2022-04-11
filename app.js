@@ -6,6 +6,7 @@ const client = new Client({
 const { joinVoiceChannel, createAudioPlayer, NoSubscriberBehavior, AudioPlayer, StreamType, createAudioResource, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 const play = require('play-dl');
 const { token } = require('./config.json');
+const prefix = "단젤아";
 
 client.on('ready', () => { 
     console.log(`Logged in as ${client.user.tag}`); 
@@ -19,14 +20,14 @@ let resource;
 let player;
 
 client.on('messageCreate', async msg => { 
-    if (msg.content.startsWith('!play')) {
+    if (msg.content.startsWith(prefix)) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 재생하려면 음성 채널에 입장해주세요')
         const connection = joinVoiceChannel({
             channelId: msg.member.voice.channel.id,
             guildId: msg.guild.id,
             adapterCreator: msg.guild.voiceAdapterCreator
         })
-        let args = msg.content.split('play')[1]
+        let args = msg.content.split(prefix)[1]
         yt_info = await play.search(args, {
             limit: 1
         })
@@ -43,7 +44,7 @@ client.on('messageCreate', async msg => {
         msg.react('▶')
         msg.reply(`${args} 불러드릴게요`)
         connection.subscribe(player)
-    } else if (msg.content == '!stop') {
+    } else if (msg.content == `${prefix} 그만`) {
         player.stop()
         msg.react('⏹')
         msg.reply('그만 부를게요')
