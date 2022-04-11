@@ -15,24 +15,25 @@ client.on('ready', () => {
 let voiceConnection;
 let audioPlayer = new AudioPlayer();
 
-
+let songList = [];
 let yt_info;
 let stream;
 let resource;
 let player;
 
 client.on('messageCreate', async msg => { 
-    if (msg.content.startsWith(prefix)) {
+    if (msg.content.startsWith(`${prefix}불러줘`)) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 재생하려면 음성 채널에 입장해주세요')
         const connection = joinVoiceChannel({
             channelId: msg.member.voice.channel.id,
             guildId: msg.guild.id,
             adapterCreator: msg.guild.voiceAdapterCreator
         })
-        let args = msg.content.split(prefix)[1]
+        let args = msg.content.split(`${prefix}불러줘`)[1]
         yt_info = await play.search(args, {
             limit: 1
         })
+        console.log(yt_info);
         stream = await play.stream(yt_info[0].url)
         resource = createAudioResource(stream.stream, {
             inputType: stream.type
@@ -44,9 +45,9 @@ client.on('messageCreate', async msg => {
         })
         player.play(resource)
         msg.react('▶')
-        msg.reply(`${args} 불러드릴게요`)
+        msg.reply(`${args} 불러드릴게요 \n ${yt_info[0].url} 재생중`)
         connection.subscribe(player)
-    } else if (msg.content == `${prefix} 그만`) {
+    } else if (msg.content === `${prefix}그만`) {
         player.stop()
         msg.react('⏹')
         msg.reply('그만 부를게요')
