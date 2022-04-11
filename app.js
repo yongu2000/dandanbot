@@ -5,11 +5,7 @@ const client = new Client({
 });
 const { joinVoiceChannel, createAudioPlayer, NoSubscriberBehavior, AudioPlayer, StreamType, createAudioResource, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 const play = require('play-dl');
-
-const { token, youtube_key } = require('./config.json');
-const Youtube = require('youtube-node');
-const youtube = new Youtube();
-youtube.setKey(youtube_key);
+const { token } = require('./config.json');
 
 client.on('ready', () => { 
     console.log(`Logged in as ${client.user.tag}`); 
@@ -17,8 +13,6 @@ client.on('ready', () => {
 
 let voiceConnection;
 let audioPlayer = new AudioPlayer();
-
-
 let yt_info;
 let stream;
 let resource;
