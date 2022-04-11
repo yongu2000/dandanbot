@@ -1,0 +1,22 @@
+{
+  "name": "dandanbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yongu2000/dandanbot.git"
+  },
+  "author": "Yong U Cho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yongu2000/dandanbot/issues"
+  },
+  "homepage": "https://github.com/yongu2000/dandanbot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
