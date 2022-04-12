@@ -100,22 +100,22 @@ client.on('messageCreate', async msg => {
         } else {
             msg.reply(`부를 노래가 없어요`);
         }
+    } else if (msg.content === `${prefix}나가` || msg.content === `${prefix} 나가`) {
+        queue.delete(msg.guild.id);
+        serverQueue.connection.destroy();
     }
-    // } else if (msg.content === `${prefix}나가`) {
-    //     serverQueue.songs = []
-    //     serverQueue.connection.destroy();
-    // }
 
     // 명령어 설명
     if (msg.content === `${prefix}설명해` || msg.content === `${prefix} 설명해`) {
         console.log('설명')
         msg.reply(
-        `단젤아불러줘 / 단젤아 불러줘 [노래제목] - 노래 예약, 재생 \n
-단젤아스킵 / 단젤아 스킵 - 노래 스킵 \n
-단젤아목록 / 단젤아 목록 - 예약 노래 목록 \n
-단젤아잠깐 / 단젤아 잠깐 - 노래 일시정지 \n
-단젤아다시 / 단젤아 다시 - 노래 일시정지 해제 \n
-단젤아그만 / 단젤아 그만 - 예약, 재생중인 노래 모두 제거`);
+        `단젤아 불러줘 / 단젤아불러줘 [노래제목] - 노래 예약, 재생 \n
+단젤아 스킵 / 단젤아스킵 - 노래 스킵 \n
+단젤아 목록 / 단젤아목록 - 예약 노래 목록 \n
+단젤아 잠깐 / 단젤아잠깐 - 노래 일시정지 \n
+단젤아 다시 / 단젤아다시 - 노래 일시정지 해제 \n
+단젤아 그만 / 단젤아그만 - 예약, 재생중인 노래 모두 제거 \n
+단젤아 나가 / 단젤아나가 - 단젤 내보내기`);
     }
 
 });
