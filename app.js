@@ -51,7 +51,7 @@ client.on('messageCreate', async msg => {
         if (player) {
             player.stop()
             msg.react('⏩')
-            if (serverQueue.songs.length === 0) {
+            if (serverQueue.songs.length === 1) {
                 msg.reply(`부를 노래가 없어요`);
             } else {
                 msg.reply('다음 노래 부를게요')
@@ -111,11 +111,11 @@ client.on('messageCreate', async msg => {
         console.log('설명')
         msg.reply(
         `단젤아불러줘 / 단젤아 불러줘 [노래제목] - 노래 예약, 재생 \n
-        단젤아스킵 / 단젤아 스킵 - 노래 스킵 \n
-        단젤아목록 / 단젤아 목록 - 예약 노래 목록 \n
-        단젤아잠깐 / 단젤아 잠깐 - 노래 일시정지 \n
-        단젤아다시 / 단젤아 다시 - 노래 일시정지 해제 \n
-        단젤아그만 / 단젤아 그만 - 예약, 재생중인 노래 제거`);
+단젤아스킵 / 단젤아 스킵 - 노래 스킵 \n
+단젤아목록 / 단젤아 목록 - 예약 노래 목록 \n
+단젤아잠깐 / 단젤아 잠깐 - 노래 일시정지 \n
+단젤아다시 / 단젤아 다시 - 노래 일시정지 해제 \n
+단젤아그만 / 단젤아 그만 - 예약, 재생중인 노래 모두 제거`);
     }
 
 });
