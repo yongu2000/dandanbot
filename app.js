@@ -69,7 +69,7 @@ client.on('messageCreate', async msg => {
     } else if (msg.content === `${prefix}다시` || msg.content === `${prefix} 다시`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 다시 재생하려면 음성 채널에 입장해주세요')
         console.log('다시')
-        player.resume()
+        player.unpause()
         msg.react('⏯')
         msg.reply('다시 부를게요')
         // 노래 목록 출력
