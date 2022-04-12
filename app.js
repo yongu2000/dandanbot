@@ -10,6 +10,9 @@ const prefix = '단젤아';
 
 client.on('ready', () => { 
     console.log(`Logged in as ${client.user.tag}`); 
+    client.user.setActivity("명령어 확인: [단젤아 설명해]", {
+        type: "LISTENING"
+      });
 }); 
 
 //노래 큐
