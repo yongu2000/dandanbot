@@ -32,11 +32,14 @@ client.on('messageCreate', async msg => {
     //노래 추가
     if (msg.content.startsWith(`${prefix}불러줘 `)) {
         console.log('불러줘')
-        execute(msg, serverQueue, false);
+        let args = msg.content.split(`${prefix}불러줘 `)[1];
+        execute(msg, serverQueue, args);
         // 노래 추가 띄어쓰기 버전
     } else if (msg.content.startsWith(`${prefix} 불러줘 `)) {
         console.log('불러줘 띄어쓰기')
-        execute(msg, serverQueue, true);
+        let args = msg.content.split(`${prefix} 불러줘 `)[1];
+        execute(msg, serverQueue, args);
+        
         // 노래 스킵
     } else if (msg.content.startsWith(`${prefix}불러줘`) || msg.content.startsWith(`${prefix} 불러줘`)) {
         console.log('어허')
@@ -112,24 +115,26 @@ client.on('messageCreate', async msg => {
 });
 
 // 노래 추가 비동기 함수
-async function execute(msg, serverQueue, space) {
+async function execute(msg, serverQueue, args) {
     if (!msg.member.voice?.channel) return msg.channel.send('노래를 재생하려면 음성 채널에 입장해주세요')
-    let args = ''
-    if (space) {
-        args = msg.content.split(`${prefix} 불러줘 `)[1]
+    const re = /http/g
+    const isUrl = re.test(args)
+    let song;
+    if (!isUrl) {
+        yt_info = await play.search(args, {
+            limit: 1
+        })
+        song = {
+            title: args,
+            url: yt_info[0].url,
+        };
     } else {
-        args = msg.content.split(`${prefix}불러줘 `)[1]
+        song = {
+            title: '링크',
+            url: args,
+        };
     }
-
-    yt_info = await play.search(args, {
-        limit: 1
-    })
-
-    const song = {
-        title: args,
-        url: yt_info[0].url,
-    };
-
+        
     if (!serverQueue) {
         const queueStructure = {
           textChannel: msg.channel,
@@ -151,9 +156,13 @@ async function execute(msg, serverQueue, space) {
             })
             queueStructure.connection = connection;
 
-            playSong(msg.guild, queueStructure.songs[0], msg);
+            playSong(msg.guild, queueStructure.songs[0]);
             msg.react('▶')
-            msg.reply(`${args} 불러드릴게요 \n ${yt_info[0].url} 부르는 중`)
+            if (!isUrl) {
+                msg.reply(`${args} 불러드릴게요 \n ${yt_info[0].url} 부르는 중`)
+            } else {
+                msg.reply(`링크된 노래 불러드릴게요 \n ${args} 부르는 중`)
+            }
             return 
         } catch (err) {
             console.log(err);
