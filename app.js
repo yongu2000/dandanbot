@@ -34,6 +34,10 @@ client.on('messageCreate', async msg => {
         console.log('불러줘 띄어쓰기')
         execute(msg, serverQueue, true);
         // 노래 스킵
+    } else if (msg.content.startsWith(`${prefix}불러줘`) || msg.content.startsWith(`${prefix} 불러줘`)) {
+        console.log('어허')
+        msg.reply('띄어쓰기 해줘');
+        // 노래 스킵
     } else if (msg.content === `${prefix}스킵` || msg.content === `${prefix} 스킵`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 스킵하려면 음성 채널에 입장해주세요')
         console.log('스킵')
@@ -98,7 +102,7 @@ client.on('messageCreate', async msg => {
     // 명령어 설명
     if (msg.content === `${prefix}설명해` || msg.content === `${prefix} 설명해`) {
         console.log('설명')
-        msg.reply(' 단젤아불러줘 [노래제목] - 노래 예약, 재생 \n단젤아스킵 - 노래 스킵 \n단젤아목록 - 예약 노래 목록 \n단젤아잠깐 - 노래 일시정지 \n단젤아다시 - 노래 일시정지 해제 \n단젤아그만 - 예약, 재생중인 노래 제거');
+        msg.reply('단젤아 사이에 띄어쓰기 넣어도 알아들어요 ex)단젤아 불러줘 [노래제목]\n단젤아불러줘 [노래제목] - 노래 예약, 재생 \n단젤아스킵 - 노래 스킵 \n단젤아목록 - 예약 노래 목록 \n단젤아잠깐 - 노래 일시정지 \n단젤아다시 - 노래 일시정지 해제 \n단젤아그만 - 예약, 재생중인 노래 제거');
     }
 
 });
