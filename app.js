@@ -5,6 +5,7 @@ const client = new Client({
 const { joinVoiceChannel, createAudioPlayer, NoSubscriberBehavior, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const play = require('play-dl');
 const { token } = require('./config.json');
+//여기만 바꾸면 개인용 봇 완성!
 const prefix = '단젤아';
 
 client.on('ready', () => { 
