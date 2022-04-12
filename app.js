@@ -101,8 +101,12 @@ client.on('messageCreate', async msg => {
             msg.reply(`부를 노래가 없어요`);
         }
     } else if (msg.content === `${prefix}나가` || msg.content === `${prefix} 나가`) {
-        queue.delete(msg.guild.id);
-        serverQueue.connection.destroy();
+        if (queue.get(msg.guild.id)) {
+            queue.delete(msg.guild.id);
+            serverQueue.connection.destroy();
+        } else {
+            msg.reply(`이미 방에 없어요`);
+        }
     }
 
     // 명령어 설명
