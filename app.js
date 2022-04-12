@@ -107,6 +107,8 @@ client.on('messageCreate', async msg => {
         } else {
             msg.reply(`이미 방에 없어요`);
         }
+    } else if (msg.content === `${prefix}`) {
+        msg.reply(`${msg.author.username}님 안녕하세요`)
     }
 
     // 명령어 설명
