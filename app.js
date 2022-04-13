@@ -28,26 +28,26 @@ let player;
 client.on('messageCreate', async msg => { 
     if (msg.author.bot) return;
     const serverQueue = queue.get(msg.guild.id);
-
+    console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
     //노래 추가
     if (msg.content.startsWith(`${prefix}불러줘 `)) {
-        console.log('불러줘')
+        //console.log('불러줘')
         let args = msg.content.split(`${prefix}불러줘 `)[1];
         execute(msg, serverQueue, args);
         // 노래 추가 띄어쓰기 버전
     } else if (msg.content.startsWith(`${prefix} 불러줘 `)) {
-        console.log('불러줘 띄어쓰기')
+        //console.log('불러줘 띄어쓰기')
         let args = msg.content.split(`${prefix} 불러줘 `)[1];
         execute(msg, serverQueue, args);
         
         // 노래 스킵
     } else if (msg.content.startsWith(`${prefix}불러줘`) || msg.content.startsWith(`${prefix} 불러줘`)) {
-        console.log('어허')
+        //console.log('어허')
         msg.reply('띄어쓰기 해줘');
         // 노래 스킵
     } else if (msg.content === `${prefix}스킵` || msg.content === `${prefix} 스킵`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 스킵하려면 음성 채널에 입장해주세요')
-        console.log('스킵')
+        //console.log('스킵')
         if (player) {
             player.stop()
             msg.react('⏩')
@@ -60,7 +60,7 @@ client.on('messageCreate', async msg => {
         // 노래 중단 (큐 전부 비움)
     } else if (msg.content === `${prefix}그만` || msg.content === `${prefix} 그만`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 멈추려면 음성 채널에 입장해주세요')
-        console.log('그만')
+        //console.log('그만')
         if (player) {
             player.stop()
             serverQueue.songs = []
@@ -72,20 +72,20 @@ client.on('messageCreate', async msg => {
         // 노래 일시 정지
     } else if (msg.content === `${prefix}잠깐` || msg.content === `${prefix} 잠깐`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 일시 정지하려면 음성 채널에 입장해주세요')
-        console.log('잠깐')
+        //console.log('잠깐')
         player.pause()
         msg.react('⏸')
         msg.reply('잠깐 쉴게요')
         // 노래 일시 정지 해제
     } else if (msg.content === `${prefix}다시` || msg.content === `${prefix} 다시`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 다시 재생하려면 음성 채널에 입장해주세요')
-        console.log('다시')
+        //console.log('다시')
         player.unpause()
         msg.react('⏯')
         msg.reply('다시 부를게요')
         // 노래 목록 출력
     } else if (msg.content === `${prefix}목록` || msg.content === `${prefix} 목록`) {
-        console.log('목록')
+        //console.log('목록')
         if (serverQueue) {
             songs = serverQueue.songs.map((song) => song.title)
             output = []
@@ -113,14 +113,15 @@ client.on('messageCreate', async msg => {
 
     // 명령어 설명
     if (msg.content === `${prefix}설명해` || msg.content === `${prefix} 설명해`) {
-        console.log('설명')
+        //console.log('설명')
         msg.reply(
-        `단젤아 불러줘 / 단젤아불러줘 [노래제목] - 노래 예약, 재생 \n
-단젤아 스킵 / 단젤아스킵 - 노래 스킵 \n
-단젤아 목록 / 단젤아목록 - 예약 노래 목록 \n
-단젤아 잠깐 / 단젤아잠깐 - 노래 일시정지 \n
-단젤아 다시 / 단젤아다시 - 노래 일시정지 해제 \n
-단젤아 그만 / 단젤아그만 - 예약, 재생중인 노래 모두 제거 \n
+        `단젤아 불러줘 / 단젤아불러줘 [노래제목] - 노래 예약, 재생
+**노래 검색 시 가수명까지 추가하면 더 정확하게 불러요** \n
+단젤아 스킵 / 단젤아스킵 - 노래 스킵
+단젤아 목록 / 단젤아목록 - 예약 노래 목록
+단젤아 잠깐 / 단젤아잠깐 - 노래 일시정지
+단젤아 다시 / 단젤아다시 - 노래 일시정지 해제
+단젤아 그만 / 단젤아그만 - 예약, 재생중인 노래 모두 제거
 단젤아 나가 / 단젤아나가 - 단젤 내보내기`);
     }
 
@@ -159,7 +160,7 @@ async function execute(msg, serverQueue, args) {
         
         queue.set(msg.guild.id, queueStructure);
         queueStructure.songs.push(song);
-        console.log(queueStructure.songs)
+        //console.log(queueStructure.songs)
         try {
             const connection = joinVoiceChannel({
                 channelId: msg.member.voice.channel.id,
@@ -183,7 +184,7 @@ async function execute(msg, serverQueue, args) {
         }
     } else {
         serverQueue.songs.push(song);
-        console.log(serverQueue.songs)
+        //console.log(serverQueue.songs)
         msg.react('➡')
         msg.reply(`${serverQueue.songs.length-1}곡 더 부르고 ${song.title} 불러드릴게요`);
     }
