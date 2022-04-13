@@ -28,26 +28,30 @@ let player;
 client.on('messageCreate', async msg => { 
     if (msg.author.bot) return;
     const serverQueue = queue.get(msg.guild.id);
-    console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
+    
     //노래 추가
     if (msg.content.startsWith(`${prefix}불러줘 `)) {
         //console.log('불러줘')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         let args = msg.content.split(`${prefix}불러줘 `)[1];
         execute(msg, serverQueue, args);
         // 노래 추가 띄어쓰기 버전
     } else if (msg.content.startsWith(`${prefix} 불러줘 `)) {
         //console.log('불러줘 띄어쓰기')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         let args = msg.content.split(`${prefix} 불러줘 `)[1];
         execute(msg, serverQueue, args);
         
         // 노래 스킵
     } else if (msg.content.startsWith(`${prefix}불러줘`) || msg.content.startsWith(`${prefix} 불러줘`)) {
         //console.log('어허')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         msg.reply('띄어쓰기 해줘');
         // 노래 스킵
     } else if (msg.content === `${prefix}스킵` || msg.content === `${prefix} 스킵`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 스킵하려면 음성 채널에 입장해주세요')
         //console.log('스킵')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         if (player) {
             player.stop()
             msg.react('⏩')
@@ -61,6 +65,7 @@ client.on('messageCreate', async msg => {
     } else if (msg.content === `${prefix}그만` || msg.content === `${prefix} 그만`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 멈추려면 음성 채널에 입장해주세요')
         //console.log('그만')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         if (player) {
             player.stop()
             serverQueue.songs = []
@@ -73,6 +78,7 @@ client.on('messageCreate', async msg => {
     } else if (msg.content === `${prefix}잠깐` || msg.content === `${prefix} 잠깐`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 일시 정지하려면 음성 채널에 입장해주세요')
         //console.log('잠깐')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         player.pause()
         msg.react('⏸')
         msg.reply('잠깐 쉴게요')
@@ -80,12 +86,14 @@ client.on('messageCreate', async msg => {
     } else if (msg.content === `${prefix}다시` || msg.content === `${prefix} 다시`) {
         if (!msg.member.voice?.channel) return msg.channel.send('노래를 다시 재생하려면 음성 채널에 입장해주세요')
         //console.log('다시')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         player.unpause()
         msg.react('⏯')
         msg.reply('다시 부를게요')
         // 노래 목록 출력
     } else if (msg.content === `${prefix}목록` || msg.content === `${prefix} 목록`) {
         //console.log('목록')
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         if (serverQueue) {
             songs = serverQueue.songs.map((song) => song.title)
             output = []
@@ -101,6 +109,7 @@ client.on('messageCreate', async msg => {
             msg.reply(`부를 노래가 없어요`);
         }
     } else if (msg.content === `${prefix}나가` || msg.content === `${prefix} 나가`) {
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         if (queue.get(msg.guild.id)) {
             queue.delete(msg.guild.id);
             serverQueue.connection.destroy();
@@ -108,11 +117,13 @@ client.on('messageCreate', async msg => {
             msg.reply(`이미 방에 없어요`);
         }
     } else if (msg.content === `${prefix}`) {
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         msg.reply(`${msg.author.username}님 안녕하세요`)
     }
 
     // 명령어 설명
     if (msg.content === `${prefix}설명해` || msg.content === `${prefix} 설명해`) {
+        console.log(`${msg.guild.id}서버 ${msg.author.username}: ${msg.content}`);
         //console.log('설명')
         msg.reply(
         `단젤아 불러줘 / 단젤아불러줘 [노래제목] - 노래 예약, 재생
